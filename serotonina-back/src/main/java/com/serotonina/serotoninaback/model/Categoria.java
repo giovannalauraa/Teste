@@ -5,7 +5,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 public class Categoria {
@@ -13,13 +15,26 @@ public class Categoria {
     @GeneratedValue(strategy = GenerationType.AUTO)
 
     public Long id;
-    String urgente, naoUrgente, meta;
+    String meta;
+    boolean urgencia;
+
+    public Categoria(){
+
+    }
 
     /* Configuração de relacionamentos com o JPA */
     // Referenciando na classe Tarefa pelo campo "tarefas"
 
     @ManyToOne
+    @JsonBackReference
     private Tarefa tarefa;
+
+    public Categoria(Long id, boolean urgencia, String meta, Tarefa tarefa, Conteudo conteudo) {
+        this.id = id;
+        this.urgencia = urgencia;
+        this.meta = meta;
+        this.tarefa = tarefa;
+    }
 
     public Long getId() {
         return id;
@@ -27,22 +42,6 @@ public class Categoria {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getUrgente() {
-        return urgente;
-    }
-
-    public void setUrgente(String urgente) {
-        this.urgente = urgente;
-    }
-
-    public String getNaoUrgente() {
-        return naoUrgente;
-    }
-
-    public void setNaoUrgente(String naoUrgente) {
-        this.naoUrgente = naoUrgente;
     }
 
     public String getMeta() {
@@ -53,15 +52,21 @@ public class Categoria {
         this.meta = meta;
     }
 
-    public Conteudo getConteudo() {
-        return conteudo;
+    public boolean isUrgencia() {
+        return urgencia;
     }
 
-    public void setConteudo(Conteudo conteudo) {
-        this.conteudo = conteudo;
+    public void setUrgencia(boolean urgencia) {
+        this.urgencia = urgencia;
     }
 
-    @OneToOne(mappedBy = "categoria_tarefa")
-    public Conteudo conteudo;
+    public Tarefa getTarefa() {
+        return tarefa;
+    }
 
+    public void setTarefa(Tarefa tarefa) {
+        this.tarefa = tarefa;
+    }
+    
+    
 }

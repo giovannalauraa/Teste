@@ -10,13 +10,26 @@ public class Conteudo {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String titulo, conteudo, pago, gratuito;
+    private String titulo, conteudo, assinatura;
+    
+    
+    public Conteudo(){
 
-    public Conteudo(String titulo, String categoria, String conteudo, String pago, String gratuito) {
+    }
+
+    public Conteudo(Long id, String titulo, String conteudo, String assinatura) {
+        this.id = id;
         this.titulo = titulo;
         this.conteudo = conteudo;
-        this.pago = pago;
-        this.gratuito = gratuito;
+        this.assinatura = assinatura;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitulo() {
@@ -35,20 +48,14 @@ public class Conteudo {
         this.conteudo = conteudo;
     }
 
-    public String getPago() {
-        return pago;
+    public String getAssinatura() {
+        return assinatura;
     }
 
-    public void setPago(String pago) {
-        this.pago = pago;
+    public void setAssinatura(String assinatura) {
+        this.assinatura = assinatura;
     }
-
-    public String getGratuito() {
-        return gratuito;
-    }
-
-    public void setGratuito(String gratuito) {
-        this.gratuito = gratuito;
-    }
-
+    
+  
+    
 }

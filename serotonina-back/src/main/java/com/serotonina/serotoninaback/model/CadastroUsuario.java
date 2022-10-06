@@ -6,6 +6,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class CadastroUsuario {
     @Id
@@ -20,6 +22,7 @@ public class CadastroUsuario {
     }
 
     @OneToOne(mappedBy = "cadastroUsuario")
+    @JsonBackReference
     public Usuario usuario;
 
     public CadastroUsuario(Long id, String email, String senha, Usuario usuario) {

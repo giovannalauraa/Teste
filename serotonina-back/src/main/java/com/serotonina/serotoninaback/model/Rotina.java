@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class Rotina {
     @Id
@@ -22,6 +24,7 @@ public class Rotina {
     }
 
     @ManyToMany(mappedBy = "rotina")
+    @JsonBackReference
     private List<Tarefa> tarefa;
 
     public Rotina(Long id, double horario, double data, String nomeDaMeta, String notificacao, int resposta) {

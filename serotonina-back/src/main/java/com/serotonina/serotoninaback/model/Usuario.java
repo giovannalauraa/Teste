@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class Usuario {
     @Id
@@ -22,20 +24,29 @@ public class Usuario {
     public double email;
     public double senha;
 
-    @OneToOne
+    public Usuario() {
+
+    }
+
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_cadastroUsuario")
+    @JsonManagedReference
     public CadastroUsuario cadastroUsuario;
 
     @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_usuario")
+    @JsonManagedReference
     private List<Tarefa> tarefas;
 
-    public Usuario(Long id, int resposta, String nomeUsuario, double email, double senha) {
+    public Usuario(Long id, int resposta, String nomeUsuario, double email, double senha,
+            CadastroUsuario cadastroUsuario, List<Tarefa> tarefas) {
         this.id = id;
         this.resposta = resposta;
         this.nomeUsuario = nomeUsuario;
         this.email = email;
         this.senha = senha;
+        this.cadastroUsuario = cadastroUsuario;
+        this.tarefas = tarefas;
     }
 
     public Long getId() {
@@ -93,7 +104,5 @@ public class Usuario {
     public void setTarefas(List<Tarefa> tarefas) {
         this.tarefas = tarefas;
     }
-
-    
 
 }

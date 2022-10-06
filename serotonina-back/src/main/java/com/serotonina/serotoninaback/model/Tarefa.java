@@ -11,6 +11,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class Tarefa {
     @Id
@@ -21,11 +24,12 @@ public class Tarefa {
     public Tarefa() {
     }
 
-    public Tarefa(Long id, String tarefaNota, Categoria categoria, Usuario usuario) {
+    public Tarefa(Long id, String tarefaNota, Categoria categoria, Usuario usuario, List<Rotina> rotina) {
         this.id = id;
         this.tarefaNota = tarefaNota;
         this.categoria = categoria;
         this.usuario = usuario;
+        this.rotina = rotina;
     }
 
     /* Configuração de relacionamentos com JPA */
@@ -36,10 +40,12 @@ public class Tarefa {
     /* Configuração de relacionamentos com o JPA */
     // Referenciando na classe Usuario pelo campo "tarefas"
     @ManyToOne
+    @JsonBackReference
     private Usuario usuario;
 
     @ManyToMany
-    @JoinTable(name = "associacao_tarefa_rotina", joinColumns = @JoinColumn(name = "fk_tarefa"))
+    @JoinTable(name = "associacao_tarefa_rotina", joinColumns = @JoinColumn(name = "fk_tarefa"), inverseJoinColumns = @JoinColumn(name = "fk_rotina"))
+    @JsonManagedReference
     private List<Rotina> rotina;
 
     public Categoria getCategoria() {
